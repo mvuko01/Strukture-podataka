@@ -99,16 +99,16 @@ int main()
 	Head.next = NULL;
 	pozicija q;
 
-	UnosP(2000, "MATEJ", "VUKO", &Head);
-	UnosK(2002, "YASS", "YII", &Head);
-	UnosP(2100, "Ivich", "Mat", &Head);
-	UnosP(1312, "Luka", "Lukic", &Head);
-	UnosK(2100, "Ivich", "Ivo", &Head);
+	UnosP(2000, "Ana", "Anic", &Head);
+	UnosK(2002, "Ivo", "Ivic", &Head);
+	UnosP(2100, "Hrvoje", "Horvat", &Head);
+	UnosP(1312, "Luka", "Marin", &Head);
+	UnosK(2100, "Ante", "Antic", &Head);
 	
 	// Pronadi("Ivvo", Head.next);
 	//printf("%s %s %d.\n", q->ime, q->prezime, q->god_rodenja);
 	Ispisi(Head.next);
-	Obrisi("Lukic", &Head);
+	Obrisi("Marin", &Head);
 	puts("\n\n");
 	Ispisi(Head.next);
 	puts("\n\n");
