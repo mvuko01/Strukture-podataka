@@ -92,7 +92,53 @@ int Obrisi(char prez[], pozicija p)
 	
 	return 0;
 }
+int DodajIzad(char prez[],int x, char novoime[], char novoprezime[], pozicija p)
+{
+	pozicija q;
 
+	p = Pronadi(prez, p->next);
+	if (p == NULL) {
+		printf("\nNema trazenog elementa!");
+		return 0;
+	}
+	else {
+		q = (pozicija)malloc(sizeof(struct osoba));
+		q->god_rodenja = x;
+		strcpy(q->ime, novoime);
+		strcpy(q->prezime, novoprezime);
+	
+		q->next = p->next;
+		p->next = q;
+		return 0;
+	}
+
+
+}
+
+int DodajIspred(char prez[], int x, char novoime[], char novoprezime[], pozicija p)
+{
+	pozicija q, f;
+
+	q = Pronadi(prez, p->next);
+	if (q == NULL) {
+		printf("\nNema trazenog elementa!");
+		return 0;
+	}
+	else
+	{
+		while (p->next != q)
+			p = p->next;
+
+		f = (pozicija)malloc(sizeof(struct osoba));
+		f->god_rodenja = x;
+		strcpy(f->ime, novoime);
+		strcpy(f->prezime, novoprezime);
+
+		f->next = p->next;
+		p->next = f;
+		return 0;
+	}
+}
 int main()
 {
 	struct osoba Head;
