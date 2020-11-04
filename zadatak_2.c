@@ -139,6 +139,88 @@ int DodajIspred(char prez[], int x, char novoime[], char novoprezime[], pozicija
 		return 0;
 	}
 }
+int ObrisiSve(pozicija p)
+{
+	
+	pozicija temp;
+
+	while (p->next != NULL)
+	{
+		temp = p->next;
+		p->next = temp->next;
+		free(temp);
+		
+	}
+	return 0;
+}
+
+int UpisDatoteka(pozicija p, FILE* f)
+{
+	fputs("IME\tPREZIME\t    GODINA RODENJA\n", f);
+	while (p->next != NULL)
+	{
+		p = p->next;
+		fprintf(f, "%s\t%s\t\t%d.\n", p->ime, p->prezime, p->god_rodenja);
+
+	}
+	return 0;
+
+}
+
+int UcitajDatoteka(pozicija p, FILE* f)
+{
+	int br = 0, i;
+	char str[50];
+	char first[50], last[50];
+	int year;
+
+	while (!feof(f))
+	{
+		fgets(str, 50, f);
+		br++;
+
+	}
+	rewind(f);
+
+	for (i = 0; i < br; i++)
+	{
+		fscanf(f, "%s %s %d", first, last, &year);
+		UnosK(year, first, last, p);
+	}
+
+	return 0;
+}
+
+int Sortiraj(pozicija p)
+{
+	pozicija end = NULL, j, prev_j, temp;
+
+	while (p->next != end)
+	{
+		prev_j = p;
+		j = p->next;
+		while (j->next != end)
+		{
+			if (strcmp(j->prezime, j->next->prezime) > 0)
+			{
+				temp = j->next;
+				prev_j->next = temp;
+				j->next = temp->next;
+				temp->next = j;
+
+				j = temp;
+			}
+			prev_j = j;
+			j = j->next;
+
+		}
+		end = j;
+
+	}
+	return 0;
+
+
+}
 int main()
 {
 	struct osoba Head;
