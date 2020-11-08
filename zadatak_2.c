@@ -93,7 +93,59 @@ int Obrisi(char prez[], pozicija p)
 	
 	return 0;
 }
+int DodajIzad(char prez[],int x, char novoime[], char novoprezime[], pozicija p)
+{
+	pozicija q;
 
+	p = Pronadi(prez, p->next);
+	if (p == NULL) {
+		printf("\nNema trazenog elementa!");
+		return 0;
+	}
+	else {
+		q = (pozicija)malloc(sizeof(struct osoba));
+		q->god_rodenja = x;
+		strcpy(q->ime, novoime);
+		strcpy(q->prezime, novoprezime);
+	
+		q->next = p->next;
+		p->next = q;
+		return 0;
+	}
+
+
+}
+
+int DodajIspred(char prez[], int x, char novoime[], char novoprezime[], pozicija p)
+{
+	pozicija q, f;
+
+	q = Pronadi(prez, p->next);
+	if (q == NULL) {
+		printf("\nNema trazenog elementa!");
+		return 0;
+	}
+	else
+	{
+		while (p->next != q)
+			p = p->next;
+
+		f = (pozicija)malloc(sizeof(struct osoba));
+		f->god_rodenja = x;
+		strcpy(f->ime, novoime);
+		strcpy(f->prezime, novoprezime);
+
+		f->next = p->next;
+		p->next = f;
+		return 0;
+	}
+}
+int ObrisiSve(pozicija p)
+{
+	
+	pozicija temp;
+
+<<<<<<< HEAD
 int DodajIzad(char prez[], int x, char novoime[], char novoprezime[], pozicija p)
 {
 	pozicija q;
@@ -147,6 +199,8 @@ int ObrisiSve(pozicija p)
 	
 	pozicija temp;
 
+=======
+>>>>>>> 951f1444737bbd97897c642de75f188c0cf3cf28
 	while (p->next != NULL)
 	{
 		temp = p->next;
@@ -224,7 +278,10 @@ int Sortiraj(pozicija p)
 
 
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 951f1444737bbd97897c642de75f188c0cf3cf28
 int main()
 {
 	struct osoba Head;
