@@ -39,6 +39,7 @@ int UnesiIzDatoteke(FILE *f, Position p)
 
 	return 0;
 }
+
 int ZbrojiPolinome(Position p, Position q, Position r) //p i q - polinomi koje zbrajamo, r - polinom dobiven zbrajanjem
 {
 	Position temp;
@@ -122,13 +123,20 @@ int ZbrojiPolinome(Position p, Position q, Position r) //p i q - polinomi koje z
 
 int Pomnozi(Position p, Position q, Position r)
 {
+
+	Position temp = NULL;
+	
+	Position start_q;
+
+
 	p = p->next;
 	q = q->next;
-	Position start_p = p;
-	Position start_q = q;
+	
+	start_q = q;
+	
 
 	
-	Position temp = NULL; 
+	
 
 	while (p != NULL)
 	{
@@ -142,8 +150,10 @@ int Pomnozi(Position p, Position q, Position r)
 			temp->koef = (p->koef) * (q->koef);
 			temp->next = NULL;
 
+			
+			ZbrojiPolinome(&temp, % )
 			q = q->next;
-			ZbrojiPolinome(&temp, &r, &r);
+			
 		}
 		q = start_q;
 		p = p->next;
@@ -183,7 +193,9 @@ int main()
 	struct polinom Head_1;
 	struct polinom Head_2;
 	struct polinom Zbroj;
+	struct polinom Umnozak;
 
+	Umnozak.next = NULL;
 	Zbroj.next = NULL;
 	Head_1.next = NULL;
 	Head_2.next = NULL;
@@ -205,10 +217,10 @@ int main()
 	Ispisi(Head_1.next);
 	puts("\n\n\n");
 	Ispisi(Head_2.next);
-	//ZbrojiPolinome(Head_1.next, Head_2.next, &Zbroj);
-	//Pomnozi(&Head_1, &Head_2, &Zbroj);
+	ZbrojiPolinome(Head_1.next, Head_2.next, &Zbroj);
+	//Pomnozi(&Head_1, &Head_2, &Umnozak);
 	puts("\n\n\n");
-	Ispisi(Head_2.next);
+	Ispisi(Zbroj.next);
 
 	ObrisiSve(&Head_1);
 	ObrisiSve(&Head_2);
