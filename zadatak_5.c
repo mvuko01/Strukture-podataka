@@ -167,11 +167,26 @@ int Ispisi(Pozicija p)
 	return 0;
 }
 
+int ObrisiSve(Pozicija p)
+{
+	Pozicija q;
+
+	while (p->next != NULL)
+	{
+		q = p->next;
+		p->next = p->next->next;
+		free(q);
+	}
+	return 0;
+}
+
 int main()
 {
 	struct cvor Head_1;
 	struct cvor Head_2;
-	struct cvor Rez;
+	struct cvor Uni;
+	struct cvor Presj;
+
 	FILE *f1 ;
 	FILE *f2 ;
 
@@ -185,7 +200,8 @@ int main()
 
 	Head_1.next = NULL;
 	Head_2.next = NULL;
-	Rez.next = NULL;
+	Uni.next = NULL;
+	Presj.next = NULL;
 
 	UnosIzDatoteke(f1, &Head_1);
 	UnosIzDatoteke(f2, &Head_2);
@@ -193,6 +209,21 @@ int main()
 	fclose(f2);
 
 	Ispisi(Head_1.next);
+	puts("\n");
 	Ispisi(Head_2.next);
+
+	Unija(&Head_1, &Head_2, &Uni);
+	puts("\n");
+	Ispisi(Uni.next);
+
+	Presjek(&Head_1, &Head_2, &Presj);
+	puts("\n");
+	Ispisi(Presj.next);
+	
+	ObrisiSve(&Head_1);
+	ObrisiSve(&Head_2);
+	ObrisiSve(&Uni);
+	ObrisiSve(&Presj);
+	
 	return 0;
 }
