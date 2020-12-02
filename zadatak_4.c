@@ -11,7 +11,7 @@ struct polinom {
 
 };
 
-int UnesiIzDatoteke(FILE *f, Position p)
+/*int UnesiIzDatoteke(FILE *f, Position p)
 {
 	Position temp = NULL;
 	Position start = p;
@@ -32,18 +32,118 @@ int UnesiIzDatoteke(FILE *f, Position p)
 		}
 		temp->next = p->next;
 		p->next = temp;
-
+		
 
 	} while (fgetc(f) != '\n');
 
 
 	return 0;
+}*/
+
+int UnesiIzDatoteke(FILE* f, Position p)
+{
+	Position q = NULL;
+	Position start = p;
+
+	while (!feof(f))
+	{
+		
+
+		q = (Position)malloc(sizeof(struct polinom));
+		if (q == NULL)
+		{
+			printf("Greska pri alokaciji memorije.");
+			return -1;
+		}
+
+		fscanf(f, "%d %d", &(q->koef), &(q->eks));
+
+		while (p->next != NULL && q->eks > p->next->eks)
+		{
+			p = p->next;
+		}
+		
+		q->next = p->next;
+		p->next = q;
+		p = start;
+
+	}
+	return 0;
 }
 
 int ZbrojiPolinome(Position p, Position q, Position r) //p i q - polinomi koje zbrajamo, r - polinom dobiven zbrajanjem
 {
-	Position temp;
+	Position s = NULL;
+	Position temp = NULL;
 	
+	while (p->next != NULL && q->next != NULL)
+	{
+		s = (Position)malloc(sizeof(struct polinom));
+		if (s == NULL)
+		{
+			printf("Greska pri alokaciji memorije.");
+			return -1;
+		}
+		s->next = NULL;
+
+		if (p->next->eks < q->next->eks)
+		{
+			s->eks = p->next->eks;
+			s->koef = p->next->koef;
+			p = p->next;
+		}
+		else if (p->next->eks > q->next->eks)
+		{
+			s->eks = q->next->eks;
+			s->koef = q->next->koef;
+			q = q->next;
+		}
+		else
+		{
+			s->eks = q->next->eks;
+			s->koef = q->next->koef + p->next->koef;
+			p = p->next;
+			q = q->next;
+		}
+		r->next = s;
+		r = s;
+
+
+	}
+	if (p->next == NULL)
+		temp = q->next;
+	else
+		temp = p->next;
+
+	while (temp != NULL)
+	{
+		Position s = NULL;
+		s = (Position)malloc(sizeof(struct polinom));
+		if (s == NULL)
+		{
+			printf("Greska pri alokaciji memorije.");
+			return -1;
+		}
+		s->next = NULL;
+
+		s->eks = temp->eks;
+		s->koef = temp->koef;
+		r->next = s;
+		r = s;
+
+		temp = temp->next;
+
+	}
+		
+
+	return 0;
+}
+
+
+/*int ZbrojiPolinome(Position p, Position q, Position r) //p i q - polinomi koje zbrajamo, r - polinom dobiven zbrajanjem
+{
+	Position temp;
+
 	while (p != NULL && q != NULL)
 	{
 		temp = (Position)malloc(sizeof(struct polinom));
@@ -119,22 +219,30 @@ int ZbrojiPolinome(Position p, Position q, Position r) //p i q - polinomi koje z
 	}
 
 	return 0;
-}
+}*/
+
 
 int Pomnozi(Position p, Position q, Position r)
 {
 
-	Position temp = NULL;
+	Position s = NULL;
 	
 	Position start_q;
-
+	struct polinom P;
 
 	p = p->next;
 	q = q->next;
 	
 	start_q = q;
 	
-
+	s = (Position)malloc(sizeof(struct polinom));
+	if (s == NULL)
+	{
+		printf("Greska pri alokaciji memorije.");
+		return -1;
+	}
+	s->next = NULL;
+	P.next = s;
 	
 	
 
@@ -142,16 +250,13 @@ int Pomnozi(Position p, Position q, Position r)
 	{
 		while (q != NULL)
 		{
-			temp = (Position)malloc(sizeof(struct polinom));
-			if (temp == NULL)
-				return -1;
 
-			temp->eks = p->eks + q->eks;
-			temp->koef = (p->koef) * (q->koef);
-			temp->next = NULL;
+			s->eks = p->eks + q->eks;
+			s->koef = (p->koef) * (q->koef);
+			
 
 			
-			ZbrojiPolinome(&temp, % )
+			ZbrojiPolinome(&P, r, r);
 			q = q->next;
 			
 		}
@@ -217,10 +322,12 @@ int main()
 	Ispisi(Head_1.next);
 	puts("\n\n\n");
 	Ispisi(Head_2.next);
-	ZbrojiPolinome(Head_1.next, Head_2.next, &Zbroj);
-	//Pomnozi(&Head_1, &Head_2, &Umnozak);
+	ZbrojiPolinome(&Head_1, &Head_2, &Zbroj);
+	Pomnozi(&Head_1, &Head_2, &Umnozak);
 	puts("\n\n\n");
 	Ispisi(Zbroj.next);
+	puts("\n\n\n");
+	Ispisi(Umnozak.next);
 
 	ObrisiSve(&Head_1);
 	ObrisiSve(&Head_2);
