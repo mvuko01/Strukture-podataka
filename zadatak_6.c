@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<malloc.h>
+#include<time.h>
 
 typedef struct cvor* Position;
 
@@ -21,6 +22,7 @@ int Ispisi(Position p)
 int push(Position p)
 {
 	Position q = NULL;
+	int x;
 
 	q = (Position)malloc(sizeof(struct cvor));
 	if (q == NULL)
@@ -29,7 +31,8 @@ int push(Position p)
 		return -1;
 	}
 
-	scanf("%d", &(q->El));
+	srand(time);
+	x = 10 + rand() % 100;
 	
 	q->Next = p->Next;
 	p->Next = q;
@@ -51,6 +54,7 @@ int pop(Position p)
 int StaviURed(Position p)
 {
 	Position q = NULL;
+	int x;
 
 	q = (Position)malloc(sizeof(struct cvor));
 	if (q == NULL)
@@ -59,8 +63,10 @@ int StaviURed(Position p)
 		return -1;
 	}
 
-	scanf("%d", &(q->El));
-
+	srand(time);
+	x = 10 + rand() % 100;
+	q->El = x;
+	
 	q->Next = p->Next;
 	p->Next = q;
 
@@ -87,16 +93,18 @@ int MakniIzReda(Position p)
 
 int main()
 {
+	
+
 	struct cvor Head_stog;
 	struct cvor Head_red;
 
 	Head_stog.Next = NULL;
 	Head_red.Next = NULL;
 
-	/*push(&Head_stog);
 	push(&Head_stog);
 	push(&Head_stog);
-	pop(&Head_stog);*/
+	push(&Head_stog);
+	pop(&Head_stog);
 
 	StaviURed(&Head_red);
 	StaviURed(&Head_red);
