@@ -1,9 +1,11 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
-#include<malloc.h>
+#include<stdlib.h>
 #include<time.h>
 
 typedef struct cvor* Position;
+
+
 
 struct cvor {
 	int El;
@@ -19,6 +21,22 @@ int Ispisi(Position p)
 	return 0;
 }
 
+int SlucajniBroj()
+{
+	
+
+	int br_mog = 100 - 10 + 1;
+	int nova_gr = RAND_MAX - (RAND_MAX % br_mog);
+	int sl_br = rand();
+
+	while (sl_br > nova_gr) //ako se broj nalazi u onom visku sta ti je u teci
+		sl_br = rand();
+
+	return sl_br % br_mog + 10;
+
+}
+
+
 int push(Position p)
 {
 	Position q = NULL;
@@ -31,8 +49,8 @@ int push(Position p)
 		return -1;
 	}
 
-	srand(time);
-	x = 10 + rand() % 100;
+	x = SlucajniBroj();
+	q->El = x;
 	
 	q->Next = p->Next;
 	p->Next = q;
@@ -51,7 +69,7 @@ int pop(Position p)
 	return 0;
 }
 
-int StaviURed(Position p)
+int pushR(Position p)
 {
 	Position q = NULL;
 	int x;
@@ -63,8 +81,7 @@ int StaviURed(Position p)
 		return -1;
 	}
 
-	srand(time);
-	x = 10 + rand() % 100;
+	x = SlucajniBroj();
 	q->El = x;
 	
 	q->Next = p->Next;
@@ -74,7 +91,7 @@ int StaviURed(Position p)
 
 }
 
-int MakniIzReda(Position p)
+int popR(Position p)
 {
 	Position temp;
 
@@ -94,7 +111,7 @@ int MakniIzReda(Position p)
 int main()
 {
 	
-
+	srand((unsigned)time(NULL));
 	struct cvor Head_stog;
 	struct cvor Head_red;
 
@@ -104,12 +121,19 @@ int main()
 	push(&Head_stog);
 	push(&Head_stog);
 	push(&Head_stog);
+	
+	Ispisi(Head_stog.Next);
 	pop(&Head_stog);
+	printf("\n");
+	Ispisi(Head_stog.Next);
 
-	StaviURed(&Head_red);
-	StaviURed(&Head_red);
-	StaviURed(&Head_red);
-	MakniIzReda(Head_red.Next);
+	printf("\n\n");
+	pushR(&Head_red);
+	pushR(&Head_red);
+	pushR(&Head_red);
+	Ispisi(Head_red.Next);
+	popR(Head_red.Next);
+	printf("\n");
 	Ispisi(Head_red.Next);
 
 }
