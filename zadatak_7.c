@@ -113,4 +113,5 @@ int main()
 	postfixRezultat(&Head, f_read);
 	ObrisiSve(&Head);
 	
+	return 0;
 }
